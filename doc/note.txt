@@ -1,0 +1,199 @@
+1. JBoss, WebSphere and Oracle for Eclipse:
+
+JBoss: Context and Dependency Injection Tools for Eclipse
+http://download.jboss.org/jbosstools/updates/development/indigo/
+
+WebSphere: Application Server Developer Tools for Eclipse V8.5.1
+http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/V8.5/
+
+Oracle Weblogic: Enterprise Pack for Eclipse (12.1.2.1)
+	
+================================================================
+2. Oracle:
+sqlplus otk/otk@localhost:1531/DCADB
+alter user SYS identified by password;
+
+sqlplus SYS/password@localhost:1531/DCADB as SYSDBA
+sh createDBs.sh -s DCADB -p 1531
+SQL > @createUsers.sql
+
+sqlplus ca/password@localhost:1531/DCADB
+
+in Run SQL Command Line (Windows)
+SQL> connect SYSTEM/Paymentus
+
+Stored Procedure:
+
+CREATE OR REPLACE PROCEDURE getDBUSERByUserId(
+	   p_userid IN DBUSER.USER_ID%TYPE,
+	   o_username OUT DBUSER.USERNAME%TYPE,
+	   o_createdby OUT  DBUSER.CREATED_BY%TYPE,
+	   o_date OUT DBUSER.CREATED_DATE%TYPE)
+IS
+BEGIN
+ 
+  SELECT USERNAME , CREATED_BY, CREATED_DATE
+  INTO o_username, o_createdby,  o_date 
+  FROM  DBUSER WHERE USER_ID = p_userid;
+ 
+END;
+/
+================================================================
+3. MySQL
+sudo -s
+yum update
+mysql If you get "command not found" then you know you need to install MySQL.
+
+yum install mysql mysql-server
+service mysqld start
+run /usr/bin/mysql_secure_installation
+chkconfig --levels 235 mysqld on
+mysql -p
+mysql> source /media/JL/coursematerial/JB295/labs/eValancheAirlines/sql/eValancheAirlinesDBStructure.sql
+mysql> source /media/JL/coursematerial/JB295/labs/eValancheAirlines/sql/eValancheAirlinesDbData.sql
+
+PostgreSQL:
+postgres=# CREATE DATABASE roadrunner;
+postgres=# \c roadrunner
+postgres=# \i C:/Users/Shawn/workspace/roadrunner/src/postgresql/rrSchema.sql;
+postgres=# \i C:/Users/Shawn/workspace/roadrunner/src/postgresql/rocInstall.sql;
+postgres=# \i C:/Users/Shawn/workspace/roadrunner/src/postgresql/rocTestInstall.sql;
+postgres=# \qv
+
+RoadRunner ROC login: Administrator with password: saPassword1
+================================================================
+4. RESTful:  REpresentational State Transfer 
+REST is architectural style for building web service using HTTP protocol, where web services are treated as resources and some basic HTTP methods like GET, POST, DELETE are used to identify standard action on resources.
+RESTful web API (also called a RESTful web service) is a web API implemented using HTTP and the REST principles.
+
+Maven:
+
+mvn archetype:generate -DarchetypeCatalog=http://download.java.net/maven/2
+mvn compile
+mvn clean package
+
+OAuth:
+OAuth is an open standard for authorization. OAuth provides client applications a 'secure delegated access' to server resources on behalf of a resource owner
+The client then uses the access token to access the protected resources hosted by the resource server
+
+SOAP, originally defined as Simple Object Access Protocol, is a protocol specification for exchanging structured information in XML form.
+
+JSON: JavaScript Object Notation, is a text-based open standard designed for human-readable data interchange.
+
+5. DCA 2.0
+
+1). Enrollment Agent creates Device Cert key pair and certificate request (via CertMgr) to bind device PIN to key pair.
+2). CertMgr requests BSIS key signature (used as SCEP password)
+3). SCEP protocol used to send request to RA.
+4). RA validates request, if OK passes to CA for ussuance.
+5). Enrollment Agent polls (via SCEP) for cert and uses in subsequent interactions with BBID Agent.
+6). BBID Agent uses Device Cert for authenticated key agreement, proving to the BBID Service thar it comes, from an authentic BBX device.
+7). Other relying parties check CA status via OCSP
+
+6. search Certificates:
+	final Query query = em.createQuery(queryString);
+        setQueryParams(query, searchConditions);
+        query.setFirstResult(offset);
+        query.setMaxResults(count);
+        @SuppressWarnings("unchecked")
+	final List<CertificateDO> certificates = query.getResultList();
+
+7. Oracle Database Index:
+--------------------------------------------------------
+--  DDL for Index SYS_C0012039
+--------------------------------------------------------
+  CREATE UNIQUE INDEX "SYS_C0012039" ON "CERTIFICATE" ("ID");
+--------------------------------------------------------
+--  DDL for Index SYS_C0012040
+--------------------------------------------------------
+  CREATE UNIQUE INDEX "CERTIFICATE_SN_CAID_IDX" ON "CERTIFICATE" ("SERIALNUMBER", "CAID");
+
+ 8. Inner joins:
+    	SELECT emp.firstname, exec.surname FROM employees emp, executives exec WHERE emp.id = exec.id;
+    Full outter joins:
+    	SELECT emp.firstname, exec.surname FROM employees emp full join executives exec ON emp.id  = exec.id;
+    Subquery: performance problems with sub-queries
+	SELECT emp.firstname, emp.surname FROM employees emp WHERE emp.id NOT IN (SELECT id FROM executives);
+
+9. SOA:
+
+SOA is an evolution of the fundamentals governing a component based development. Component based development provides an opportunity for greater code reuse than what is possible with Object Oriented (OO) development. SOA provides even greater code reuse  by utilizing OO development, component based development and also by identifying and organizing right services into a hierarchy of composite services. SOA results in loosely coupled application components, in which code is not necessarily tied to a particular database . SOAs are very popular and there is a huge demand exists for development and implementation of SOAs
+
+10. ETL:
+In computing, Extract, Transform and Load (ETL) refers to a process in database usage and especially in data warehousing that involves:
+Extracting data from outside sources
+Transforming it to fit operational needs, which can include quality levels
+Loading it into the end target (database, more specifically, operational data store, data mart or data warehouse)
+
+11. EJB2.x vs EJB3.0
+EJB2.x:
+public class AccountBean
+implements javax.ejb.SessionBean {
+     SessionContext ctx;
+     DataSource accountDB;
+     public void setSessionContext(SessionContext ctx) {
+        this.ctx = ctx;
+     }
+     public void ejbCreate() {
+          accountDB = (DataSource)ctx.lookup(
+                          "jdbc/accountDB");
+     }
+     public void ejbActivate() { }
+     public void ejbPassivate() { }
+     public void ejbRemove() { }
+     public void setAccountDeposit(int empId,
+                                      double deposit) {
+       ...
+       Connection conn = accountDB.getConnection();
+       ...
+     }
+  ...
+} and Deployment Descriptor:
+<session>
+  <ejb-name>AccountBean</ejb-name>
+  <local-home>AccountHome</local-home>
+  <local>Account</local>
+  <ejb-class>com.example.AccountBean</ejb-class>
+  <session-type>Stateless</session-type>
+  <transaction-type>Container</transaction-type>
+  <resource-ref>
+    <res-ref-name>jdbc/accountDB</res-ref-name>
+    <res-ref-type>javax.sql.DataSource</res-ref-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+</session>
+...
+<assembly-descriptor>...</assembly-descriptor>
+EJB3.0:
+@Stateless
+public class AccountBean implements Account
+{
+     @Resource private DataSource accountDB;
+ 
+     public void setAccountDeposit(int customerId,
+                                      double deposit) {
+       ...
+       Connection conn = accountDB.getConnection();
+       ...
+     }
+  ...
+}
+
+12. Struts2 Front Controler: StrutsPrepareAndExecuteFilter
+Spring Front Controler: org.springframework.web.servlet.DispatcherServlet
+
+13. JQuery:
+jquery-1.6.4.min.js
+jquery-ui-1.8.16.custom.min.js
+
+Execute a JavaScript when a button is clicked:
+<button onclick="myFunction()">Click me</button>
+
+14. Sticky Sessions:
+A load balancer with sticky sessions enabled, after routing a request to a given worker, will pass all subsequent requests with matching sessionID values to the same worker. In the event that this worker fails, the load balancer will begin routing this request to the next most available server that has access to the failed server's session information. Tomcat's method of in-memory session replication relies on sticky sessions for both normal and failover load balancing situations.
+
+15. AJAX:
+AJAX is the art of exchanging data with a server, and updating parts of a web page - without reloading the whole page.
+document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+
+OSGi (Open Service Gateway Initiative) is Java framework for developing and deploying modular software programs and libraries
