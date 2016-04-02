@@ -1,0 +1,8 @@
+sqlplus otk/otk@localhost:1531/DCADB
+alter user SYS identified by password;
+
+sqlplus SYS/password@localhost:1531/DCADB as SYSDBA
+sh createDBs.sh -s DCADB -p 1531
+SQL > @createUsers.sql
+
+sqlplus ca/password@localhost:1531/DCADB
