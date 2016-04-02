@@ -4,7 +4,7 @@ I got the phone number from my previous employer DataGlider, they are now in Isr
 
 First Name         Last Name         Title                          Company                       Phone                   Email
 
-Ehud                   Cohen                Employer CEO        DataGlider                     972584562222     Ehudcohen12@gmail.com
+Ehud                   Cohen                Employer CEO        DataGlider Inc                    972584562222     Ehudcohen12@gmail.com
 Ester                   Lipinsky            Manager(Owner)      DataGlider                     972584562222    ester@dataglider.com
 
 Rob                    Williams            Team Lead                BlackBerry Limited      (416)419-9438     rob.williams.jnr@gmail.com
