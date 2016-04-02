@@ -9,3 +9,5 @@ Ester                   Lipinsky            Manager(Owner)      DataGlider      
 
 Rob                    Williams            Team Lead                BlackBerry Limited      (416)419-9438     rob.williams.jnr@gmail.com
 Dana                  Zhao                   Software Developer  BlackBerry Limited      (647) 835-8182    zhaodanth@hotmail.com
+
+Dana                  Zhao                   Software Developer  BlackBerry Limited      (647) 835-8182    zhaodanth@hotmail.com
