@@ -1,0 +1,12 @@
+1. Find the application pid using "jps"
+	For example 1824
+2. Dump the heap into file in tmp directory under current drive
+	jmap -dump:format=b,file=/tmp/java_app-heap.bin 1824
+3. Visualize the heap
+	jhat -J-Xmx326m /tmp/java_app-heap.bin
+	this will started HTTP server on port 7000
+4. Connect to Jhat server by pointing your browser to:
+	http://localhost:7000
+
+Link: http://blog.emptyway.com/2007/04/02/finding-memory-leaks-in-java-apps/
+
