@@ -197,3 +197,4 @@ AJAX is the art of exchanging data with a server, and updating parts of a web pa
 document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
 
 OSGi (Open Service Gateway Initiative) is Java framework for developing and deploying modular software programs and libraries
+OSGi (Open Service Gateway Initiative) is Java framework for developing and deploying modular software programs and libraries
